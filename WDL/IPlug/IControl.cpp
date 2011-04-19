@@ -354,9 +354,22 @@ bool ITextControl::Draw(IGraphics* pGraphics)
 }
 
 ICaptionControl::ICaptionControl(IPlugBase* pPlug, IRECT* pR, int paramIdx, IText* pText, bool showParamLabel)
-:   ITextControl(pPlug, pR, pText), mShowParamLabel(showParamLabel) 
+:   ITextControl(pPlug, pR, pText), mShowParamLabel(showParamLabel)
 {
     mParamIdx = paramIdx;
+    mDisablePrompt = false;
+}
+
+void ICaptionControl::OnMouseDown(int x, int y, IMouseMod* pMod)
+{
+	if (pMod->L || pMod->R) {
+		PromptUserInput();
+	}
+}
+
+void ICaptionControl::OnMouseDblClick(int x, int y, IMouseMod* pMod)
+{
+	PromptUserInput();
 }
 
 bool ICaptionControl::Draw(IGraphics* pGraphics)
